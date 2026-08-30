@@ -1,0 +1,54 @@
+// Colors — 食卓とワインの温かいトーン（比べて選ぶ楽しさ）
+$color-bg: #faf6f0;
+$color-surface: #ffffff;
+$color-surface-2: #f1e9df;
+$color-primary: #b5533f;
+$color-primary-hover: #963f2f;
+$color-accent: #3f7d6e;
+$color-accent-hover: #326256;
+$color-danger: #c0392b;
+$color-text: #33302b;
+$color-text-muted: #8a8177;
+$color-border: #e6ddd0;
+
+// App-specific tokens
+$color-gold: #d9a441;
+$color-gold-soft: #f6e7c4;
+$color-gold-ink: #a67c22;
+$color-chip-bg: #f1e4d4;
+$color-chip-text: #7a5c3e;
+
+// 淡いトーン（ホバー・選択状態の背景など）
+$color-surface-3: #e7dccb;
+$color-primary-tint: #f6e7e2;
+$color-primary-tint-strong: #f0d8d1;
+$color-accent-tint: #e6f2ef;
+
+// Entry palette (割り当て用)
+$entry-colors: #e2725b, #3f7d6e, #d9a441, #5b7fa6, #a5678e, #7a8b3c, #c77b4a, #4f9d9d;
+
+// Typography
+$font-family: 'Noto Sans JP', sans-serif;
+$font-size-xs: 11px;
+$font-size-sm: 13px;
+$font-size-base: 15px;
+$font-size-lg: 18px;
+$font-size-xl: 22px;
+$font-size-2xl: 28px;
+
+// Spacing
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+
+// Border radius
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-lg: 16px;
+
+// Breakpoints
+$bp-mobile: 480px;
+$bp-tablet: 768px;
