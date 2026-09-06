@@ -2,8 +2,8 @@
 $color-bg: #faf6f0;
 $color-surface: #ffffff;
 $color-surface-2: #f1e9df;
-$color-primary: #b5533f;
-$color-primary-hover: #963f2f;
+$color-primary: #f1c40f;
+$color-primary-hover: #c9970d;
 $color-accent: #3f7d6e;
 $color-accent-hover: #326256;
 $color-danger: #c0392b;
@@ -20,15 +20,15 @@ $color-chip-text: #7a5c3e;
 
 // 淡いトーン（ホバー・選択状態の背景など）
 $color-surface-3: #e7dccb;
-$color-primary-tint: #f6e7e2;
-$color-primary-tint-strong: #f0d8d1;
+$color-primary-tint: #fdf6e0;
+$color-primary-tint-strong: #faecc2;
 $color-accent-tint: #e6f2ef;
 
 // Entry palette (割り当て用)
 $entry-colors: #e2725b, #3f7d6e, #d9a441, #5b7fa6, #a5678e, #7a8b3c, #c77b4a, #4f9d9d;
 
 // Typography
-$font-family: 'Noto Sans JP', sans-serif;
+$font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
 $font-size-xs: 11px;
 $font-size-sm: 13px;
 $font-size-base: 15px;
