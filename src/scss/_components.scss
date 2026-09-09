@@ -88,6 +88,9 @@
   &__logo {
     font-size: 44px;
     margin-bottom: $spacing-sm;
+    color: $color-primary;
+
+    svg { width: 1em; height: 1em; }
   }
 
   &__title {
@@ -140,6 +143,8 @@
     font-weight: 700;
     color: $color-primary;
     white-space: nowrap;
+
+    svg { width: 1em; height: 1em; vertical-align: -3px; }
   }
 
   &__nav {
@@ -207,6 +212,8 @@
   color: $color-text-muted;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
+
+  svg { width: 1em; height: 1em; vertical-align: -3px; }
 
   &.is-active {
     color: $color-primary;
@@ -879,6 +886,8 @@
   &__icon {
     font-size: 40px;
     margin-bottom: $spacing-sm;
+
+    svg { width: 1em; height: 1em; }
   }
 }
 
@@ -993,6 +1002,8 @@
   font-size: $font-size-sm;
   font-weight: 700;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  svg { width: 1em; height: 1em; vertical-align: -2px; }
 }
 
 // ===== Footer =====

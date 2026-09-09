@@ -17,7 +17,8 @@ export function renderRankingBars(items: RankBarItem[]): HTMLElement {
 
     const pos = document.createElement('span');
     pos.className = 'rank-row__pos';
-    pos.textContent = item.first ? '🏆' : String(i + 1);
+    if (item.first) pos.innerHTML = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-3px;display:inline-block"><path d="M18 14 H46 V26 Q46 40 32 40 Q18 40 18 26 Z"/><path d="M18 18 Q6 18 6 28 Q6 36 18 34"/><path d="M46 18 Q58 18 58 28 Q58 36 46 34"/><line x1="32" y1="40" x2="32" y2="48"/><rect x="22" y="48" width="20" height="6" rx="2"/></svg>';
+    else pos.textContent = String(i + 1);
 
     const label = document.createElement('span');
     label.className = 'rank-row__label';

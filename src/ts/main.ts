@@ -197,7 +197,10 @@ function renderList(): void {
     const champ = championOf(t);
     if (champ) {
       const idx = t.entries.findIndex((e) => e.id === champ.id);
-      foot.append(el('span', 'session-card__champion', `🏆 ${entryLabel(t, champ, idx)}`));
+      const champSpan = el('span', 'session-card__champion');
+      champSpan.innerHTML = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-3px;display:inline-block"><path d="M18 14 H46 V26 Q46 40 32 40 Q18 40 18 26 Z"/><path d="M18 18 Q6 18 6 28 Q6 36 18 34"/><path d="M46 18 Q58 18 58 28 Q58 36 46 34"/><line x1="32" y1="40" x2="32" y2="48"/><rect x="22" y="48" width="20" height="6" rx="2"/></svg>';
+      champSpan.append(document.createTextNode(` ${entryLabel(t, champ, idx)}`));
+      foot.append(champSpan);
     }
     if (t.updatedAt) foot.append(el('span', undefined, formatDate(t.updatedAt)));
     card.append(foot);
@@ -385,7 +388,9 @@ function renderResultBanner(t: Tasting): HTMLElement {
     const idx = t.entries.findIndex((e) => e.id === champ.id);
     banner.append(el('div', 'result-banner__label', t.status === 'done' ? '優勝' : '現在の1位'));
     const name = el('div', 'result-banner__name');
-    name.append(el('span', undefined, '🏆'));
+    const champIcon = el('span');
+    champIcon.innerHTML = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-3px;display:inline-block"><path d="M18 14 H46 V26 Q46 40 32 40 Q18 40 18 26 Z"/><path d="M18 18 Q6 18 6 28 Q6 36 18 34"/><path d="M46 18 Q58 18 58 28 Q58 36 46 34"/><line x1="32" y1="40" x2="32" y2="48"/><rect x="22" y="48" width="20" height="6" rx="2"/></svg>';
+    name.append(champIcon);
     name.append(el('span', undefined, entryLabel(t, champ, idx)));
     banner.append(name);
     if (t.blind && !t.revealed) {
@@ -538,13 +543,15 @@ function renderDetailActions(t: Tasting): HTMLElement {
   const champ = championOf(t);
 
   if (t.blind && !t.revealed) {
-    const b = el('button', 'btn btn--accent', '🎭 正体を公開する') as HTMLButtonElement;
+    const b = el('button', 'btn btn--accent') as HTMLButtonElement;
+    b.innerHTML = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-3px;display:inline-block"><path d="M32 10 C18 10 12 20 12 30 C12 44 20 54 32 54 C44 54 52 44 52 30 C52 20 46 10 32 10 Z"/><circle cx="22" cy="26" r="3" fill="currentColor" stroke="none"/><circle cx="42" cy="26" r="3" fill="currentColor" stroke="none"/><path d="M22 40 Q32 46 42 40"/></svg> 正体を公開する';
     b.dataset.action = 'reveal';
     actions.append(b);
   }
 
   if (t.status === 'active' && champ) {
-    const b = el('button', 'btn btn--primary', '🏆 結果を確定する') as HTMLButtonElement;
+    const b = el('button', 'btn btn--primary') as HTMLButtonElement;
+    b.innerHTML = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-3px;display:inline-block"><path d="M18 14 H46 V26 Q46 40 32 40 Q18 40 18 26 Z"/><path d="M18 18 Q6 18 6 28 Q6 36 18 34"/><path d="M46 18 Q58 18 58 28 Q58 36 46 34"/><line x1="32" y1="40" x2="32" y2="48"/><rect x="22" y="48" width="20" height="6" rx="2"/></svg> 結果を確定する';
     b.dataset.action = 'confirm';
     actions.append(b);
   }
@@ -698,7 +705,9 @@ function renderChampions(): void {
     const idx = t.entries.findIndex((e) => e.id === champ.id);
     const card = el('div', 'champion-card');
     card.dataset.id = t.id;
-    card.append(el('span', 'champion-card__medal', '🏆'));
+    const medal = el('span', 'champion-card__medal');
+    medal.innerHTML = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" style="width:1em;height:1em;vertical-align:-3px;display:inline-block"><path d="M18 14 H46 V26 Q46 40 32 40 Q18 40 18 26 Z"/><path d="M18 18 Q6 18 6 28 Q6 36 18 34"/><path d="M46 18 Q58 18 58 28 Q58 36 46 34"/><line x1="32" y1="40" x2="32" y2="48"/><rect x="22" y="48" width="20" height="6" rx="2"/></svg>';
+    card.append(medal);
     const body = el('div');
     body.append(el('div', 'champion-card__theme', t.title || '(無題の比べ会)'));
     body.append(el('div', 'champion-card__name', entryLabel(t, champ, idx)));
