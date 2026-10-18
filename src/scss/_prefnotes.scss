@@ -1,0 +1,200 @@
+// ===== 好みノート（好き・苦手がわかったときのメモ）=====
+// 4つの好み系アプリ共通。色などはアプリ側の変数を使い、好き/苦手の色だけ共通で持つ。
+$pref-like: #d6336c !default;
+$pref-dislike: #5b6b7b !default;
+
+.pref-lead {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  margin-bottom: $spacing-md;
+}
+
+.pref-verdict {
+  display: inline-flex;
+  gap: $spacing-sm;
+
+  &__btn {
+    min-width: 88px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    border: 1px solid $color-border;
+    background: $color-surface;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+    font-weight: 700;
+
+    &--like.is-active {
+      background: $pref-like;
+      border-color: $pref-like;
+      color: #fff;
+    }
+
+    &--dislike.is-active {
+      background: $pref-dislike;
+      border-color: $pref-dislike;
+      color: #fff;
+    }
+  }
+}
+
+.pref-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: $spacing-md 0 $spacing-sm;
+
+  &__btn {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: $color-surface-2;
+    color: $color-text;
+    font-size: $font-size-sm;
+    font-weight: 700;
+
+    &.is-active {
+      background: $color-primary;
+      color: #fff;
+    }
+  }
+
+  &__count {
+    font-size: $font-size-xs;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+}
+
+.pref-list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.pref-card {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  background: $color-surface;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+
+  &__icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: $font-size-lg;
+
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  &--like &__icon {
+    color: $pref-like;
+  }
+
+  &--dislike &__icon {
+    color: $pref-dislike;
+  }
+
+  &__main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    font-size: $font-size-sm;
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  &__text {
+    margin: 2px 0;
+    font-size: $font-size-sm;
+    color: $color-text;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  &__date {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+
+  &__btn {
+    flex-shrink: 0;
+    padding: 4px 8px;
+    color: $color-text-muted;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    &--delete {
+      font-size: $font-size-lg;
+      line-height: 1;
+    }
+  }
+}
+
+.pref-badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: $font-size-xs;
+  font-weight: 700;
+
+  &--like {
+    background: $pref-like;
+  }
+
+  &--dislike {
+    background: $pref-dislike;
+  }
+}
+
+// 判断した場面（履歴・お気に入り・診断結果など）に置く「好みをメモ」ボタン
+.pref-from-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid $color-border;
+  color: $color-text-muted;
+  font-size: $font-size-xs;
+  font-weight: 700;
+  white-space: nowrap;
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  &:hover {
+    color: $color-primary;
+    border-color: $color-primary;
+  }
+
+  // 一覧の行に置くときは、狭い画面ではアイコンだけにする
+  @media (max-width: 480px) {
+    span {
+      display: none;
+    }
+  }
+
+  // 診断結果などカードの中に置くとき（ラベルを常に表示）
+  &--inline {
+    margin-top: $spacing-sm;
+
+    @media (max-width: 480px) {
+      span {
+        display: inline;
+      }
+    }
+  }
+}

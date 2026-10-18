@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'reset';
 @import 'components';
+@import 'prefnotes';
 
 /* iOS Safari: inputへのフォーカス時の自動拡大を防ぐ(16px未満だと発生) */
 @media (max-width: 480px) {

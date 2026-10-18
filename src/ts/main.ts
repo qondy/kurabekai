@@ -14,6 +14,7 @@ import {
   openConfirmDialog, initConfirmDialog,
   createChipInput, ChipInputController, formatDate,
 } from './ui';
+import { initPrefNotes, PREF_PEN_ICON } from './prefnotes-ui';
 import { submitFeedback } from './feedback';
 
 const DEFAULT_AXES = ['味', '香り', 'コスパ', '見た目'];
@@ -37,6 +38,7 @@ const views: Record<string, HTMLElement> = {
   create: $('create-view'),
   detail: $('detail-view'),
   champions: $('champions-view'),
+  prefnotes: $('prefnote-section'),
 };
 
 const sessionListEl = $('session-list');
@@ -108,6 +110,13 @@ function championOf(t: Tasting): Entry | null {
   return t.mode === 'score' ? scoreChampion(t) : buildBracket(t.entries, t.results).champion;
 }
 
+// 好みノート（共通モジュール）。表示の切り替えはタブ(showView)に任せる
+const prefNotes = initPrefNotes({
+  showToast,
+  confirmDelete: (title, text, onConfirm) => openConfirmDialog(title, text, '削除する', onConfirm),
+  manageVisibility: false,
+});
+
 // ============================================================
 // Views
 // ============================================================
@@ -130,6 +139,7 @@ tabNav.addEventListener('click', (e) => {
 // Auth
 // ============================================================
 onAuthChange((user) => {
+  prefNotes.setUser(user ? user.uid : null);
   if (unsub) {
     unsub();
     unsub = null;
@@ -568,6 +578,11 @@ function renderDetailActions(t: Tasting): HTMLElement {
     actions.append(b);
   }
 
+  const note = el('button', 'btn btn--ghost') as HTMLButtonElement;
+  note.innerHTML = `${PREF_PEN_ICON.replace('<svg ', '<svg style="width:1em;height:1em;vertical-align:-2px;display:inline-block" ')} 好みをメモ`;
+  note.dataset.action = 'pref-note';
+  actions.append(note);
+
   const settings = el('button', 'btn btn--ghost', '設定・削除') as HTMLButtonElement;
   settings.dataset.action = 'settings';
   actions.append(settings);
@@ -635,6 +650,10 @@ detailBody.addEventListener('click', (e) => {
     );
   } else if (action === 'settings') {
     openSettings(t);
+  } else if (action === 'pref-note') {
+    // 好みノートのタブに移り、この比べ会のタイトルを入れた状態で書き始める
+    showView('prefnotes');
+    prefNotes.start(t.title);
   }
 });
 
