@@ -2,6 +2,10 @@
 @import 'reset';
 @import 'components';
 @import 'prefnotes';
+@import 'memo';
+:root {
+  --memo-accent: #8a6500;
+}
 
 /* iOS Safari: inputへのフォーカス時の自動拡大を防ぐ(16px未満だと発生) */
 @media (max-width: 480px) {

@@ -2,6 +2,7 @@ import {
   PrefNote, Verdict, subscribePrefNotes, addPrefNote, updatePrefNote, deletePrefNote,
   MAX_PREF_NOTES, MAX_PREF_SUBJECT,
 } from './prefnotes';
+import { enhanceTextarea, renderMemoView } from './memo-ui';
 
 // 「好みノート」の画面部分。4つの好み系アプリで共通に使う（index.html の #prefnote-section とセットで動く）
 
@@ -55,6 +56,7 @@ export function initPrefNotes(deps: PrefNotesDeps): PrefNotesApi {
   const manageVisibility = deps.manageVisibility !== false;
   let uid: string | null = null;
   let unsubscribe: (() => void) | null = null;
+  enhanceTextarea(textInput);
   let notes: PrefNote[] = [];
   let filter: 'all' | Verdict = 'all';
   let verdict: Verdict = 'like';
@@ -113,13 +115,25 @@ export function initPrefNotes(deps: PrefNotesDeps): PrefNotesApi {
         <div class="pref-card__icon">${note.verdict === 'like' ? HEART : SAD}</div>
         <div class="pref-card__main">
           <div class="pref-card__title"><span class="pref-badge pref-badge--${note.verdict}">${VERDICT_LABEL[note.verdict]}</span>${note.subject ? ` ${escapeHtml(note.subject)}` : ''}</div>
-          <div class="pref-card__text">${escapeHtml(note.text)}</div>
+          <div class="pref-card__text"></div>
           <div class="pref-card__date">${formatDate(note)}</div>
         </div>
         <button type="button" class="pref-card__btn" data-edit-pref="${note.id}" aria-label="編集">${PREF_PEN_ICON}</button>
         <button type="button" class="pref-card__btn pref-card__btn--delete" data-delete-pref="${note.id}" aria-label="削除">&times;</button>
       </div>
     `).join('');
+
+    listEl.querySelectorAll<HTMLElement>('.pref-card').forEach((card) => {
+      const note = list.find((n) => n.id === card.dataset.prefId);
+      const box = card.querySelector<HTMLElement>('.pref-card__text');
+      if (!note || !box) return;
+      renderMemoView(box, note.text, { clampLines: 3 });
+      // 本文をタップすると、そのまま編集に入る
+      box.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a, .memo-view__toggle')) return;
+        card.querySelector<HTMLButtonElement>('[data-edit-pref]')?.click();
+      });
+    });
   }
 
   function startEditing(note: PrefNote): void {

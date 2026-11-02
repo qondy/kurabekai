@@ -17,6 +17,7 @@ import {
 import { initPrefNotes, PREF_PEN_ICON } from './prefnotes-ui';
 import { submitFeedback } from './feedback';
 import { initClickTracking, track } from './analytics';
+import { initTextareas, makeInlineEditable, renderMemoView } from './memo-ui';
 
 initClickTracking();
 
@@ -205,7 +206,11 @@ function renderList(): void {
     );
     card.append(top);
 
-    if (t.memo.trim()) card.append(el('div', 'session-card__memo', t.memo));
+    if (t.memo.trim()) {
+      const memoBox = el('div', 'session-card__memo');
+      renderMemoView(memoBox, t.memo, { clampLines: 2 });
+      card.append(memoBox);
+    }
 
     const foot = el('div', 'session-card__foot');
     foot.append(el('span', undefined, `エントリー ${t.entries.length}`));
@@ -383,7 +388,21 @@ function renderDetail(): void {
   );
   detailBody.append(meta);
 
-  if (t.memo.trim()) detailBody.append(el('div', 'view-intro', t.memo));
+  const intro = el('div', 'view-intro');
+  makeInlineEditable(intro, {
+    maxLength: 1000,
+    placeholder: '開催のきっかけ、ルールなど',
+    emptyLabel: '＋ メモを追加（きっかけ・ルールなど）',
+    getText: () => t.memo,
+    save: async (text) => {
+      if (!currentUid) throw new Error('not signed in');
+      await updateTasting(currentUid, t.id, { memo: text });
+      track('tasting_memo_edit');
+      showToast('メモを保存しました');
+    },
+    onError: () => showToast('メモの保存に失敗しました'),
+  });
+  detailBody.append(intro);
 
   // --- result banner ---
   detailBody.append(renderResultBanner(t));
@@ -786,3 +805,5 @@ btnFeedbackSend.addEventListener('click', () => {
 });
 
 showView('list');
+
+initTextareas();

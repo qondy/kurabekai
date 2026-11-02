@@ -198,3 +198,7 @@ $pref-dislike: #5b6b7b !default;
     }
   }
 }
+
+.pref-card__text.memo-view {
+  cursor: pointer;
+}

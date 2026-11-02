@@ -100,7 +100,7 @@
           </div>
           <div class="form-field">
             <label class="form-field__label" for="c-memo">ひとことメモ（任意）</label>
-            <textarea id="c-memo" class="form-field__textarea" placeholder="開催のきっかけ、ルールなど"></textarea>
+            <textarea id="c-memo" class="form-field__textarea" maxlength="1000" placeholder="開催のきっかけ、ルールなど"></textarea>
           </div>
 
           <div class="form-field">
@@ -251,7 +251,7 @@
       <label class="form-field__label" for="s-title">タイトル</label>
       <input id="s-title" type="text" />
       <label class="form-field__label" for="s-memo">ひとことメモ</label>
-      <textarea id="s-memo" rows="3"></textarea>
+      <textarea id="s-memo" rows="3" maxlength="1000"></textarea>
       <div class="modal__actions">
         <button id="btn-settings-delete" class="btn btn--danger">この比べ会を削除</button>
         <button id="btn-settings-save" class="btn btn--primary">保存する</button>
