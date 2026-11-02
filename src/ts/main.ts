@@ -16,6 +16,9 @@ import {
 } from './ui';
 import { initPrefNotes, PREF_PEN_ICON } from './prefnotes-ui';
 import { submitFeedback } from './feedback';
+import { initClickTracking, track } from './analytics';
+
+initClickTracking();
 
 const DEFAULT_AXES = ['味', '香り', 'コスパ', '見た目'];
 
@@ -170,7 +173,9 @@ onAuthChange((user) => {
 });
 
 btnGoogleLogin.addEventListener('click', () => {
-  loginWithGoogle().catch((err: Error) => showToast('ログインに失敗しました: ' + err.message));
+  loginWithGoogle()
+    .then(() => track('login', { method: 'google' }))
+    .catch((err: Error) => showToast('ログインに失敗しました: ' + err.message));
 });
 btnLogout.addEventListener('click', () => logout());
 
@@ -323,6 +328,7 @@ createForm.addEventListener('submit', (e) => {
   addTasting(currentUid, { title, memo: cMemo.value.trim(), mode, blind: cBlind.checked, axes, entries })
     .then((id) => {
       justCreatedId = id;
+      track('tasting_create', { mode, entry_count: entries.length });
       showToast('比べ会をはじめました');
       openDetail(id);
     })
@@ -633,7 +639,10 @@ detailBody.addEventListener('click', (e) => {
   if (action === 'reveal') {
     updateTasting(currentUid, t.id, { revealed: true });
   } else if (action === 'confirm') {
-    updateTasting(currentUid, t.id, { status: 'done' }).then(() => showToast('結果を確定しました'));
+    updateTasting(currentUid, t.id, { status: 'done' }).then(() => {
+      track('tasting_finish', { mode: t.mode });
+      showToast('結果を確定しました');
+    });
   } else if (action === 'reopen') {
     updateTasting(currentUid, t.id, { status: 'active' });
   } else if (action === 'reset') {
@@ -696,6 +705,7 @@ btnSettingsDelete.addEventListener('click', () => {
     () => {
       deleteTasting(currentUid!, id)
         .then(() => {
+          track('tasting_delete');
           showToast('削除しました');
           closeOverlay(settingsOverlay);
           currentId = null;
